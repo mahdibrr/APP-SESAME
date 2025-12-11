@@ -44,21 +44,23 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-// Health Check
-app.get('/api/health', (req, res) => {
-    res.status(200).json({ status: 'ok', timestamp: new Date() });
-});
-
-
-
 app.use(express.json());
 
-// Health check endpoint for Docker
+// Health check endpoints
 app.get('/api/health', (req, res) => {
     res.status(200).json({
         status: 'OK',
         timestamp: new Date().toISOString(),
         uptime: process.uptime()
+    });
+});
+
+// Render health check endpoint
+app.get('/healthz', (req, res) => {
+    res.status(200).json({
+        status: 'OK',
+        service: 'leave-management-backend',
+        timestamp: new Date().toISOString()
     });
 });
 
