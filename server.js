@@ -107,12 +107,35 @@ const keepAlive = () => {
     }, 2 * 60 * 1000); // 2 minutes
 };
 
+// Auto-setup database on startup
+const setupDatabase = async () => {
+    try {
+        console.log('🔄 Checking database connection...');
+        const db = await import('./models/index.cjs');
+        await db.default.sequelize.authenticate();
+        console.log('✅ Database connected successfully');
+        
+        // Auto-sync tables in production (be careful with this)
+        if (process.env.AUTO_SYNC_DB === 'true') {
+            console.log('🔨 Auto-syncing database tables...');
+            await db.default.sequelize.sync({ alter: true });
+            console.log('✅ Database tables synced');
+        }
+    } catch (error) {
+        console.error('❌ Database connection failed:', error.message);
+        console.log('⚠️  Server starting without database connection');
+    }
+};
+
 // Start Server
 const PORT = process.env.PORT || 3002;
-server.listen(PORT, () => {
+server.listen(PORT, async () => {
     console.log(`Backend running on http://localhost:${PORT}`);
     console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
     console.log(`CORS Origin: ${corsOptions.origin}`);
+    
+    // Setup database
+    await setupDatabase();
     
     // Start keep-alive only in production
     if (process.env.NODE_ENV === 'production' && process.env.ENABLE_KEEP_ALIVE === 'true') {

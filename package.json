@@ -5,6 +5,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
+    "setup": "node scripts/auto-setup.cjs",
+    "migrate": "node scripts/migrate.cjs",
     "docker:build": "docker-compose build",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",

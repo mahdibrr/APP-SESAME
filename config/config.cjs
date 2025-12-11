@@ -4,16 +4,18 @@ module.exports = {
     development: {
         username: process.env.DB_USER || 'root',
         password: process.env.DB_PASSWORD || '',
-        database: process.env.DB_NAME || 'university_leave_db',
+        database: process.env.DB_NAME || 'sesame-app_back',
         host: process.env.DB_HOST || '127.0.0.1',
+        port: process.env.DB_PORT || 3306,
         dialect: 'mysql',
         logging: false
     },
     test: {
         username: process.env.DB_USER || 'root',
         password: process.env.DB_PASSWORD || '',
-        database: process.env.DB_NAME_TEST || 'university_leave_db_test',
+        database: process.env.DB_NAME_TEST || 'sesame-app_back_test',
         host: process.env.DB_HOST || '127.0.0.1',
+        port: process.env.DB_PORT || 3306,
         dialect: 'mysql',
         logging: false
     },
@@ -22,6 +24,7 @@ module.exports = {
         password: process.env.DB_PASSWORD,
         database: process.env.DB_NAME,
         host: process.env.DB_HOST,
+        port: process.env.DB_PORT || 3306,
         dialect: 'mysql',
         logging: false,
         pool: {

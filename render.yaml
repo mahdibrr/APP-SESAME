@@ -1,0 +1,22 @@
+# Render Blueprint for easy deployment
+services:
+  - type: web
+    name: leave-management-backend
+    env: docker
+    repo: https://github.com/mahdibrr/APP-SESAME.git
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3002
+      - key: AUTO_SYNC_DB
+        value: true
+      - key: ENABLE_KEEP_ALIVE
+        value: true
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 24h
+    # Add your database environment variables here after setting up MySQL
